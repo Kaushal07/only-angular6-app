@@ -9,9 +9,15 @@ declare const $;
 })
 export class BasicFormValidationComponent implements OnInit {
   Name: any;
+  Password:any;
+  Phone:any;
   fileObj:any;
   noFileSelected:boolean=false;
   userNameRegexPattern = /^[a-zA-Z0-9_]+$/;
+  isPhoneNumberValid:boolean = false;
+  mask = ['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/];
+
+
 
   constructor(private router: Router) {
   }
@@ -25,6 +31,25 @@ export class BasicFormValidationComponent implements OnInit {
     this.fileObj = event.target.files[0];
   }
 
+  phoneNumberValueChange() {
+    this.isPhoneNumberValid = false;
+  }
+
+  phoneValidation() {
+    if (this.Phone) {
+      let phoneNumber = this.Phone.replace(/\D+/g, '');
+      if (phoneNumber.length != 10) {
+        this.isPhoneNumberValid = true;
+        return false;
+      } else {
+        this.Phone = this.Phone.replace(/\D+/g, '');
+        this.isPhoneNumberValid = false;
+        return true;
+      }
+    }
+    return true;
+  }
+
   checkFileSelectOrNot(){
     if(!this.fileObj){
       this.noFileSelected = true;
@@ -36,7 +61,7 @@ export class BasicFormValidationComponent implements OnInit {
 
   }
   validateForm(form) {
-    if (this.checkFileSelectOrNot() && form.valid)  {
+    if (this.checkFileSelectOrNot() && this.phoneValidation() && form.valid)  {
         this.router.navigate(['/data/list']);
     }
   }

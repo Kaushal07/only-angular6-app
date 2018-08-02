@@ -9,16 +9,16 @@
       <div class="form-group">
         <label>File</label>
         <input class="form-control" type="file" name="file-type" id="file-type" (change)="getFile($event)"
-                required>
+               required>
         <span class="alert-danger error-msg" *ngIf="noFileSelected">
           Please select file.
         </span>
       </div>
       <div class="form-group">
-      <label>Name <span style="color: red">*</span></label>
-      <input class="form-control" type="text" name="name" id="name" [(ngModel)]="Name"
-             #name="ngModel" required>
-      <span *ngIf="name.invalid && (name.dirty || validationForm.submitted)">
+        <label>Name <span style="color: red">*</span></label>
+        <input class="form-control" type="text" name="name" id="name" [(ngModel)]="Name"
+               #name="ngModel" required>
+        <span *ngIf="name.invalid && (name.dirty || validationForm.submitted)">
         <span class="alert-danger error-msg" *ngIf="name.errors.required">
           Please provide name.
         </span>
@@ -51,8 +51,22 @@
         </span>
       </div>
 
+      <div class="form-group">
+        <label>Phone <span style="color: red">*</span></label>
+        <input class="form-control" type="text" name="phone" id="phone" [(ngModel)]="Phone"
+               #phone="ngModel" (input)="phoneNumberValueChange()" [textMask]="{mask: mask}"  required>
+        <span *ngIf="phone.invalid && (phone.dirty || validationForm.submitted)">
+        <span class="alert-danger error-msg" *ngIf="phone.errors.required">
+          Please provide phone.
+        </span>
+        </span>
+        <span class="alert-danger error-msg" *ngIf="isPhoneNumberValid">
+           Please provide valid phone number.
+         </span>
+      </div>
+
       <div class="container container page row">
-      <button class="btn btn-success" type="submit" (click)="validateForm(validationForm)">Validate</button>
+        <button class="btn btn-success" type="submit" (click)="validateForm(validationForm)">Validate</button>
       </div>
     </form>
   </div>
